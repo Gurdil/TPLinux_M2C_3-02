@@ -26,15 +26,13 @@ public:
 
 private:
 	pthread_t thread;
-	sem_t stop;
+
 
 	static void* cFonction(void *obj)
 	{
-		((DLthread*)obj)->init();
+		((DLthread*)obj)->doWork();
 		return NULL;
 	}
-
-	void init();
 
 protected:
 

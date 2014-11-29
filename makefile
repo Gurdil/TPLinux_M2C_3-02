@@ -1,10 +1,10 @@
 DEBUG=yes
 CC=g++
 ifeq ($(DEBUG),yes)
-	CFLAGS=-W -Wall -ansi -pedantic -g
+	CFLAGS=-W -Wall -ansi -pedantic -g -std=c++11
 	LDFLAGS= -lpthread
 else
-	CFLAGS=-W -Wall -ansi -pedantic
+	CFLAGS=-W -Wall -ansi -pedantic -std=c++11
 	LDFLAGS= -lpthread
 endif
 
