@@ -8,7 +8,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-class map {
+class map
+{
 public:
 	map();
 	virtual ~map();

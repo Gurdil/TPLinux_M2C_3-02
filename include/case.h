@@ -9,7 +9,8 @@
 #ifndef CASE_H_
 #define CASE_H_
 
-class Case {
+class Case
+{
 public:
 	Case();
 	virtual ~Case();

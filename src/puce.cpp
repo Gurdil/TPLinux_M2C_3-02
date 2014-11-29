@@ -7,10 +7,12 @@
 
 #include "puce.h"
 
-puce::puce() : DLthread(NULL)
+puce::puce() :
+		DLthread()
 {
-	posX=0;
-	posY=0;
+	posX = 0;
+	posY = 0;
+	display = 'P';
 }
 
 puce::~puce()

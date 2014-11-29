@@ -6,11 +6,15 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 #include "thread.h"
-
+#include <unistd.h>
 #include <iostream>
 using namespace std;
 
-int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+int main()
+{
+	DLthread thread;
+	thread.start();
+	usleep(5000000);
+	thread.join();
 	return 0;
 }

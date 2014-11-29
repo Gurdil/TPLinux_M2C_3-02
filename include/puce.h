@@ -9,7 +9,7 @@
 #ifndef PUCE_H_
 #define PUCE_H_
 
-class puce : DLthread
+class puce: DLthread
 {
 public:
 	puce();
@@ -23,7 +23,6 @@ private:
 	int posX;
 	int posY;
 	char display;
-
 
 };
 

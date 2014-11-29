@@ -7,12 +7,14 @@
 
 #include "map.h"
 
-map::map() {
+map::map()
+{
 	// TODO Auto-generated constructor stub
 
 }
 
-map::~map() {
+map::~map()
+{
 	// TODO Auto-generated destructor stub
 }
 

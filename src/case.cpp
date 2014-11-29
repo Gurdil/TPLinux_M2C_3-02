@@ -7,12 +7,14 @@
 
 #include "case.h"
 
-Case::Case() {
+Case::Case()
+{
 	// TODO Auto-generated constructor stub
 
 }
 
-Case::~Case() {
+Case::~Case()
+{
 	// TODO Auto-generated destructor stub
 }
 
