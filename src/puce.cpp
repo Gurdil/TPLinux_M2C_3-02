@@ -53,7 +53,6 @@ void DLpuce::doWork()
 
 
 		cout << "I'm a puce " << this->id << " !" << " nombre aléatoire : " << distribution(generator) << endl;
-		usleep(1000000);
 
 		sem_post(&DLpuce::nbPuceWait);
 	}
@@ -80,3 +79,7 @@ int DLpuce::getNbrPuceWaiting()
 	return nbrPuceWaiting;
 }
 
+void DLpuce::resetPuceWaitCounter()
+{
+	sem_init(&DLpuce::nbPuceWait, 0, 0);
+}

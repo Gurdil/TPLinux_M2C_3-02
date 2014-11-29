@@ -23,7 +23,8 @@ public:
 	int get_posY();
 	void join();
 	void go();
-	int getNbrPuceWaiting();
+	static int getNbrPuceWaiting();
+	static void resetPuceWaitCounter();
 
 private:
 	sem_t stop;

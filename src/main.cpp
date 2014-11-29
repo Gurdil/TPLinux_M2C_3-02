@@ -15,17 +15,6 @@ using namespace std;
 
 int main()
 {
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-	std::default_random_engine generator (seed);
-
-	std::uniform_int_distribution<int> distribution(1,10);
-
-	std::cout << "some random numbers between 1 and 10: ";
-	for (int i=0; i<10; ++i)
-		std::cout << distribution(generator) << " ";
-
-	std::cout << std::endl;
-
 	const int nbPuce = 10;
 	std::vector<DLpuce*> listPuce;
 	for (int i = 0; i < nbPuce; ++i)
@@ -43,15 +32,18 @@ int main()
 		listPuce[i]->go();
 	}
 
-	int nbTour = 0;
+	int nbTour = 1;
 	while(true)
 	{
 		if (nbTour == 5)
 		{
 			break;
 		}
-		if(listPuce[0]->getNbrPuceWaiting() == nbPuce)
+		if(DLpuce::getNbrPuceWaiting() == nbPuce)
 		{
+			std::cout << "tour : " << nbTour << std::endl;
+
+			DLpuce::resetPuceWaitCounter();
 			for (int i = 0; i < nbPuce; ++i)
 			{
 				listPuce[i]->go();
