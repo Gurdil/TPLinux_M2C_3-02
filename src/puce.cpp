@@ -20,3 +20,9 @@ puce::~puce()
 
 }
 
+void puce::doWork()
+{
+	cout << "I'm a puce !" << endl;
+	usleep(1000000);
+}
+

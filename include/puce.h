@@ -9,7 +9,7 @@
 #ifndef PUCE_H_
 #define PUCE_H_
 
-class puce: DLthread
+class puce: public DLthread
 {
 public:
 	puce();
@@ -23,6 +23,9 @@ private:
 	int posX;
 	int posY;
 	char display;
+
+protected:
+	virtual void doWork();
 
 };
 
