@@ -7,14 +7,47 @@
 
 #include "case.h"
 
-Case::Case()
+DLCase::DLCase(): dog(false), puce(NULL), pound(0)
 {
-	// TODO Auto-generated constructor stub
+	sem_init(&sem, 0, 0);
 
 }
 
-Case::~Case()
+DLCase::~DLCase()
 {
-	// TODO Auto-generated destructor stub
+	sem_destroy(&sem);
 }
 
+void DLCase::setDog()
+{
+	dog = true;
+}
+
+void DLCase::setPound(char pound)
+{
+	this->pound = pound;
+}
+
+DLpuce* DLCase::getPuce()
+{
+	return puce;
+}
+
+bool DLCase::getDog()
+{
+	return this->dog;
+}
+
+void DLCase::setPuce(DLpuce *puce)
+{
+	sem_wait(&sem);
+
+	this->puce = puce;
+
+	sem_post(&sem);
+}
+
+char DLCase::getPound()
+{
+	return this->pound;
+}

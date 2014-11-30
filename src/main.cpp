@@ -6,6 +6,7 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 #include "puce.h"
+#include "map.h"
 #include <unistd.h>
 #include <iostream>
 #include <vector>
@@ -15,6 +16,16 @@ using namespace std;
 
 int main()
 {
+	#ifdef FRANCAIS
+		cout << "Bonjour" << endl;
+	#else
+		cout << "Hello" << endl;
+	#endif
+
+	DLmap map(20);
+
+	return 0;
+
 	const int nbPuce = 10;
 	std::vector<DLpuce*> listPuce;
 	for (int i = 0; i < nbPuce; ++i)
@@ -35,7 +46,7 @@ int main()
 	int nbTour = 1;
 	while(true)
 	{
-		if (nbTour == 5)
+		if (nbTour == 30)
 		{
 			break;
 		}

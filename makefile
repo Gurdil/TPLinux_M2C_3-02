@@ -1,11 +1,15 @@
 DEBUG=yes
 CC=g++
+FRENCH=no
 ifeq ($(DEBUG),yes)
 	CFLAGS=-W -Wall -ansi -pedantic -g -std=c++11
 	LDFLAGS= -lpthread
 else
 	CFLAGS=-W -Wall -ansi -pedantic -std=c++11
 	LDFLAGS= -lpthread
+endif
+ifeq ($(FRENCH),yes)
+	CFLAGS += -D FRANCAIS
 endif
 
 EXEC=DLlinux

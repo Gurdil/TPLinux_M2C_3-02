@@ -4,16 +4,30 @@
  *  Created on: Nov 22, 2014
  *      Author: gurdil
  */
-#include <semaphore.h>
 
 #ifndef CASE_H_
 #define CASE_H_
+#include <semaphore.h>
+#include "puce.h"
 
-class Case
+class DLCase
 {
 public:
-	Case();
-	virtual ~Case();
+	DLCase();
+	virtual ~DLCase();
+	void setDog();
+	bool getDog();
+	void setPound(char pound);
+	char getPound();
+	DLpuce* getPuce();
+	void setPuce(DLpuce *puce);
+
+private:
+	bool dog;
+	DLpuce *puce;
+	unsigned char pound;
+	sem_t sem;
+
 };
 
 #endif /* CASE_H_ */
