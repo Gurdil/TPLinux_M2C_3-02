@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <complex>
+#include <string>
 
 class DLmap
 {
