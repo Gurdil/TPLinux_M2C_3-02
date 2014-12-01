@@ -9,7 +9,7 @@
 
 DLCase::DLCase(): dog(false), puce(NULL), pound(0)
 {
-	sem_init(&sem, 0, 0);
+	sem_init(&sem, 0, 1);
 
 }
 

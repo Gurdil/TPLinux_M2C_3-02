@@ -6,6 +6,7 @@
  */
 
 #include "map.h"
+#include "puce.h"
 
 DLmap::DLmap(int size):
 				size(size),
@@ -36,9 +37,6 @@ DLmap::DLmap(int size):
 			}
 		}
 	}
-
-	this->show();
-
 }
 
 DLmap::~DLmap()
@@ -83,3 +81,51 @@ void DLmap::show()
 	}
 }
 
+void DLmap::setPuce(DLpuce *puce)
+{
+	while(true)
+	{
+		std::uniform_int_distribution<int> distribution(0, size*size-1);
+		int boxIndex = distribution(generator);
+		if(cases[boxIndex].getDog())
+		{
+			continue;
+		}
+		if(cases[boxIndex].getPuce() != NULL)
+		{
+			continue;
+		}
+		cases[boxIndex].setPuce(puce);
+		break;
+	}
+}
+
+bool DLmap::setPuce(int line, int col, DLpuce *puce)
+{
+	int range = 0;
+	while(puce != cases[range].getPuce())
+	{
+		range++;
+	}
+
+	if(cases[this->convert(line, col)].getDog())
+	{
+		cases[range].setPuce(NULL);
+		return true;
+	}
+	else if (cases[this->convert(line, col)].getPuce() != NULL)
+	{
+		return false;
+	}
+	else if(cases[range].getPound() == 0 || cases[range].getPound() < cases[this->convert(line, col)].getPound() )
+	{
+		return false;
+	}
+	else
+	{
+		cases[range].setPuce(NULL);
+		cases[this->convert(line, col)].setPuce(puce);
+		return false;
+	}
+
+}

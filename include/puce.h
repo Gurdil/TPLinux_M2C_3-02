@@ -12,11 +12,14 @@
 #include "thread.h"
 #include <chrono>
 #include <random>
+#include <iostream>
+
+class DLControler;
 
 class DLpuce: public DLthread
 {
 public:
-	DLpuce();
+	DLpuce(DLControler *controler);
 	virtual ~DLpuce();
 
 	int get_posX();
@@ -38,6 +41,7 @@ private:
 
 	static int nbPuce;
 	static sem_t nbPuceWait;
+	DLControler *controler;
 
 protected:
 	virtual void doWork();

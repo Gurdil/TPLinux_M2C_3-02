@@ -6,15 +6,17 @@
  */
 
 #include "puce.h"
+#include "DLControler.h"
 
 int DLpuce::nbPuce = 0;
 sem_t DLpuce::nbPuceWait;
 
-DLpuce::DLpuce() :
+DLpuce::DLpuce(DLControler *controler) :
 		DLthread(),
 		stop(),
 		generator(std::chrono::system_clock::now().time_since_epoch().count()),
-		distribution(-3,3)
+		distribution(-3,3),
+		controler(controler)
 {
 	DLpuce::nbPuce++;
 	this->id = DLpuce::nbPuce;
@@ -33,6 +35,10 @@ DLpuce::~DLpuce()
 
 void DLpuce::doWork()
 {
+	std::uniform_int_distribution<int> distPosNeg(0,1);
+	std::uniform_int_distribution<int> distSizeJump(1,3);
+	int jumpX;
+	int jumpY;
 	int stopValue;
 	while(true)
 	{
@@ -50,9 +56,15 @@ void DLpuce::doWork()
 			break;
 		}
 
+		jumpX = distSizeJump(generator);
+		jumpY = distSizeJump(generator);
+
+		jumpX = distPosNeg(generator)>0 ? jumpX : -jumpX;
+		jumpY = distPosNeg(generator)>0 ? jumpY : -jumpY;
+
+		controler->setPuce(jumpX, jumpY, this);
 
 
-		cout << "I'm a puce " << this->id << " !" << " nombre aléatoire : " << distribution(generator) << endl;
 
 		sem_post(&DLpuce::nbPuceWait);
 	}

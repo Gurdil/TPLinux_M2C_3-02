@@ -6,7 +6,7 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 #include "puce.h"
-#include "map.h"
+#include "DLControler.h"
 #include <unistd.h>
 #include <iostream>
 #include <vector>
@@ -22,7 +22,7 @@ int main()
 		cout << "Hello" << endl;
 	#endif
 
-	DLmap map(20);
+	DLControler controler(20);
 
 	return 0;
 
@@ -30,7 +30,7 @@ int main()
 	std::vector<DLpuce*> listPuce;
 	for (int i = 0; i < nbPuce; ++i)
 	{
-		listPuce.push_back(new DLpuce());
+		listPuce.push_back(new DLpuce(NULL));
 	}
 
 	for (int i = 0; i < nbPuce; ++i)

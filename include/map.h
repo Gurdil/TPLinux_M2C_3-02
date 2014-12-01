@@ -16,12 +16,16 @@
 #include <complex>
 #include <string>
 
+class DLpuce;
+
 class DLmap
 {
 public:
 	DLmap(int size);
 	virtual ~DLmap();
 	void show();
+	void setPuce(DLpuce *puce);
+	bool setPuce(int line, int col, DLpuce *puce);
 
 private:
 	int size;
