@@ -36,7 +36,7 @@ DLpuce::~DLpuce()
 void DLpuce::doWork()
 {
 	std::uniform_int_distribution<int> distPosNeg(0,1);
-	std::uniform_int_distribution<int> distSizeJump(1,3);
+	std::uniform_int_distribution<int> distSizeJump(0,3);
 	int jumpX;
 	int jumpY;
 	int stopValue;
@@ -77,8 +77,8 @@ void DLpuce::go()
 
 void DLpuce::join()
 {
-	sem_post(&this->waitDebut);
 	sem_post(&stop);
+	sem_post(&this->waitDebut);
 	DLthread::join();
 }
 

@@ -8,6 +8,8 @@
 #ifndef SRC_DLCONTROLER_H_
 #define SRC_DLCONTROLER_H_
 
+#include <stdlib.h>
+#include <semaphore.h>
 #include "map.h"
 #include "puce.h"
 
@@ -22,6 +24,8 @@ private:
 	DLmap map;
 	int nbPuce;
 	std::vector<DLpuce*> listPuce;
+	std::vector<DLpuce*> listPuceDog;
+	sem_t semPuceDog;
 };
 
 #endif /* SRC_DLCONTROLER_H_ */

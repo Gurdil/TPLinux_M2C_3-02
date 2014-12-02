@@ -25,7 +25,8 @@ public:
 	virtual ~DLmap();
 	void show();
 	void setPuce(DLpuce *puce);
-	bool setPuce(int line, int col, DLpuce *puce);
+	bool jumpPuce(int jumpX, int jumpY, DLpuce *puce);
+
 
 private:
 	int size;
@@ -33,6 +34,9 @@ private:
 	std::default_random_engine generator;
 
 	int convert(int i, int j);
+	int convertLin(int range);
+	int convertCol(int range);
+	bool setPuce(int line, int col, DLpuce *puce,int range);
 	int dogAuraSize;
 };
 

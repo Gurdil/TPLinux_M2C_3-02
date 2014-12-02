@@ -7,9 +7,12 @@
 
 #include "DLControler.h"
 
-DLControler::DLControler(int size) : map(size),listPuce()
+DLControler::DLControler(int size) : map(size),listPuce(),listPuceDog()
 {
-	nbPuce = (double)size/100*10;
+	sem_init(&semPuceDog, 0, 1);
+
+	nbPuce = (double)(size*size)/100*10;
+	//nbPuce = 1;
 
 	std::vector<DLpuce*> listPuce;
 	for (int i = 0; i < nbPuce; ++i)
@@ -32,29 +35,40 @@ DLControler::DLControler(int size) : map(size),listPuce()
 	int nbTour = 1;
 	while(true)
 	{
-		if (nbTour == 2)
+		if (listPuce.size() == 0)
 		{
+			std::cout << "Fin de partie !" << std::endl;
 			break;
 		}
-		if(DLpuce::getNbrPuceWaiting() == nbPuce)
+		if(DLpuce::getNbrPuceWaiting() == (int)listPuce.size())
 		{
 			std::cout << "tour : " << nbTour << std::endl;
+			std::cout << "Puce : " << listPuce.size() << std::endl;
+			this->map.show();
+			//usleep(100000);
+			system("clear");
 
+			for (unsigned int i = 0; i < listPuceDog.size(); ++i)
+			{
+				DLpuce *puce = listPuceDog[i];
+				puce->join();
+
+				int range = 0;
+				while(puce != listPuce[range])
+				{
+					range++;
+				}
+				listPuce.erase(listPuce.begin()+range);
+			}
+			listPuceDog.clear();
 			DLpuce::resetPuceWaitCounter();
-			for (int i = 0; i < nbPuce; ++i)
+			for (unsigned int i = 0; i < listPuce.size(); ++i)
 			{
 				listPuce[i]->go();
 			}
 			nbTour++;
 		}
-		else
-		{
-			usleep(1000);
-		}
 	}
-
-	this->map.show();
-
 }
 
 DLControler::~DLControler()
@@ -66,10 +80,17 @@ DLControler::~DLControler()
 		delete puce;
 		puce = NULL;
 	}
+
+	sem_destroy(&semPuceDog);
 }
 
 void DLControler::setPuce(int jumpX, int jumpY, DLpuce *puce)
 {
-	//TODO
+	if(map.jumpPuce(jumpX,jumpY,puce))
+	{
+		sem_wait(&semPuceDog);
+		listPuceDog.push_back(puce);
+		sem_post(&semPuceDog);
+	}
 }
 

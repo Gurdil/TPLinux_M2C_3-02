@@ -100,14 +100,8 @@ void DLmap::setPuce(DLpuce *puce)
 	}
 }
 
-bool DLmap::setPuce(int line, int col, DLpuce *puce)
+bool DLmap::setPuce(int line, int col, DLpuce *puce, int range)
 {
-	int range = 0;
-	while(puce != cases[range].getPuce())
-	{
-		range++;
-	}
-
 	if(cases[this->convert(line, col)].getDog())
 	{
 		cases[range].setPuce(NULL);
@@ -117,7 +111,11 @@ bool DLmap::setPuce(int line, int col, DLpuce *puce)
 	{
 		return false;
 	}
-	else if(cases[range].getPound() == 0 || cases[range].getPound() < cases[this->convert(line, col)].getPound() )
+	else if(cases[range].getPound() != 0 && cases[this->convert(line, col)].getPound() == 0)
+	{
+		return false;
+	}
+	else if (cases[range].getPound() != 0 && cases[range].getPound() < cases[this->convert(line, col)].getPound())
 	{
 		return false;
 	}
@@ -128,4 +126,40 @@ bool DLmap::setPuce(int line, int col, DLpuce *puce)
 		return false;
 	}
 
+}
+
+bool DLmap::jumpPuce(int jumpX, int jumpY, DLpuce *puce)
+{
+	int range = 0;
+	while(puce != cases[range].getPuce() && range != size*size)
+	{
+		range++;
+	}
+
+	if(range == size*size)
+	{
+		//throw std::out_of_range("Access to a flea not on map.");
+		return true;
+	}
+
+	int lin = convertLin(range) + jumpY;
+	int col = convertCol(range) + jumpX;
+
+	if(lin<0 || lin>(size-1) || col<0 || col>(size-1))
+	{
+		return false;
+	}
+
+	return this->setPuce(lin, col,puce,range);
+
+}
+
+int DLmap::convertLin(int range)
+{
+	return (range - this->convertCol(range))/size;
+}
+
+int DLmap::convertCol(int range)
+{
+	return range%size;
 }
