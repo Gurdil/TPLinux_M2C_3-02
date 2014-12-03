@@ -7,22 +7,31 @@
 //============================================================================
 #include "puce.h"
 #include "DLControler.h"
+#include "DLWindow.h"
 #include <unistd.h>
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <random>
+#include <gtkmm/application.h>
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
+
+	DLWindow window;
+
+	return app->run(window);
+
+
 	#ifdef FRANCAIS
 		cout << "Bonjour" << endl;
 	#else
 		cout << "Hello" << endl;
 	#endif
 
-	DLControler controler(20);
+	DLControler controler(10);
 
 	return 0;
 

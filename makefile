@@ -2,10 +2,10 @@ DEBUG=yes
 CC=g++
 FRENCH=no
 ifeq ($(DEBUG),yes)
-	CFLAGS=-W -Wall -ansi -pedantic -g -std=c++11
-	LDFLAGS= -lpthread
+	CFLAGS=-W -Wall -ansi -pedantic -O0 -g -std=c++11 `pkg-config gtkmm-3.0 --cflags`
+	LDFLAGS= -lpthread `pkg-config gtkmm-3.0 --libs`
 else
-	CFLAGS=-W -Wall -ansi -pedantic -std=c++11
+	CFLAGS=-W -Wall -ansi -pedantic -O0 -std=c++11
 	LDFLAGS= -lpthread
 endif
 ifeq ($(FRENCH),yes)
@@ -23,7 +23,6 @@ EXISTE := $(wildcard $(BIN_DIR))
 SRC= $(wildcard $(SRC_DIR)/*.cpp)
 NAME = $(basename $(notdir $(SRC)))
 OBJ= $(addprefix $(BIN_DIR)/, $(addsuffix .o, $(NAME)))
-
 
 all: makedir $(EXEC)
 ifeq ($(DEBUG),yes)
@@ -49,7 +48,10 @@ $(BIN_DIR)/thread.o: $(INC_DIR)/thread.h
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) -o $@ -c $< -I$(INC_DIR) $(CFLAGS)
 
-.PHONY: clean mrproper
+.PHONY: clean mrproper memory_test
+
+memory_test: all
+	valgrind --leak-check=yes $(ROOT_DIR)/$(EXEC)
 
 clean:
 	rm -rf $(BIN_DIR)/*.o

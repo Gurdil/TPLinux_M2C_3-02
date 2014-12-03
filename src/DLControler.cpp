@@ -7,7 +7,7 @@
 
 #include "DLControler.h"
 
-DLControler::DLControler(int size) : map(size),listPuce(),listPuceDog()
+DLControler::DLControler(int size) : map(size),listPuce(),listSavePuce(),listPuceDog()
 {
 	sem_init(&semPuceDog, 0, 1);
 
@@ -19,6 +19,7 @@ DLControler::DLControler(int size) : map(size),listPuce(),listPuceDog()
 	{
 		DLpuce * puce = new DLpuce(this);
 		listPuce.push_back(puce);
+		listSavePuce.push_back(puce);
 		map.setPuce(puce);
 	}
 
@@ -73,10 +74,9 @@ DLControler::DLControler(int size) : map(size),listPuce(),listPuceDog()
 
 DLControler::~DLControler()
 {
-	for (unsigned int i = 0; i < listPuce.size(); ++i)
+	for (unsigned int i = 0; i < listSavePuce.size(); ++i)
 	{
-		DLpuce *puce = listPuce[i];
-		puce->join();
+		DLpuce *puce = listSavePuce[i];
 		delete puce;
 		puce = NULL;
 	}

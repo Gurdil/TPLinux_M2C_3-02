@@ -18,7 +18,8 @@ DLmap::DLmap(int size):
 
 	int xDog = distribution(generator);
 	int yDog = distribution(generator);
-	dogAuraSize = 2;
+
+	dogAuraSize = (double)(size)/100*20;
 
 	cases[this->convert(xDog, yDog)].setDog();
 	cases[this->convert(xDog, yDog)].setPound(1);

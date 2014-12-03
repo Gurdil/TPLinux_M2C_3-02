@@ -31,6 +31,8 @@ DLpuce::DLpuce(DLControler *controler) :
 DLpuce::~DLpuce()
 {
 	sem_destroy(&stop);
+	sem_destroy(&waitDebut);
+	sem_destroy(&DLpuce::nbPuceWait);
 }
 
 void DLpuce::doWork()

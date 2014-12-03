@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <semaphore.h>
+#include <vector>
 #include "map.h"
 #include "puce.h"
 
@@ -24,6 +25,7 @@ private:
 	DLmap map;
 	int nbPuce;
 	std::vector<DLpuce*> listPuce;
+	std::vector<DLpuce*> listSavePuce;
 	std::vector<DLpuce*> listPuceDog;
 	sem_t semPuceDog;
 };
