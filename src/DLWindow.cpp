@@ -15,17 +15,22 @@ DLWindow::DLWindow(int size) :
 	grid(),
 	size(size),
 	nbFlea(10),
-	tab{'_','F','_','_','_','_','_','_','_','_',
-		'_','D','_','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','F','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','F','_','_','F','_','_','_','_',
-		'_','_','_','_','_','_','_','F','_','_',
-		'_','F','_','_','_','_','_','_','_','_',
+	tab{'_','D','_','F','_','_','_','_','_','_',
 		'_','_','_','F','_','_','_','_','_','_',
-		'_','_','F','_','_','F','_','_','_','F',}
+		'_','_','_','_','_','_','_','_','_','_',
+		'_','_','_','_','_','_','_','_','_','_',
+		'_','_','F','_','_','_','_','_','_','_',
+		'_','_','_','_','_','_','_','_','_','_',
+		'_','_','_','_','_','_','_','_','_','_',
+		'_','_','_','_','_','_','_','_','_','_',
+		'_','_','_','_','_','_','_','_','_','_',
+		'_','_','_','_','_','_','_','_','_','_'},
+		nbRun(0)
 {
+
+	sigc::slot<bool> my_slot = sigc::bind(sigc::mem_fun(*this, &DLWindow::on_timeout), 1);
+	sigc::connection conn = Glib::signal_timeout().connect(my_slot, 1000);
+
 	set_border_width(10);
 	add(grid);
 	grid.override_background_color(Gdk::RGBA("black"));
@@ -56,6 +61,31 @@ DLWindow::DLWindow(int size) :
 	this->show_all_children(true);
 }
 
+bool DLWindow::on_timeout(int timer_number)
+{
+	if(nbRun%2 == 0)
+	{
+		tab[55] = 'F';
+	}
+	else
+	{
+		tab[55] = '_';
+	}
+
+	this->flushGrid();
+	this->update(tab);
+
+	nbRun++;
+	if(nbRun == 4)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 DLWindow::~DLWindow()
 {
 	for (unsigned int i = 0; i < listPixVoid.size(); ++i)
@@ -82,13 +112,13 @@ void DLWindow::update(char *data)
 			switch (a)
 			{
 				case '_':
-					grid.attach(*listPixVoid[this->convert(i,j)], i,j,1,1);
+					grid.attach(*listPixVoid[this->convert(i,j)], j,i,1,1);
 					break;
 				case 'D':
-					grid.attach(*pictureDog, i,j,1,1);
+					grid.attach(*pictureDog, j,i,1,1);
 					break;
 				case 'F':
-					grid.attach(*listPixFlea[nbFleaAttached], i,j,1,1);
+					grid.attach(*listPixFlea[nbFleaAttached], j,i,1,1);
 					nbFleaAttached++;
 					break;
 			}
@@ -98,9 +128,9 @@ void DLWindow::update(char *data)
 
 
 
-Gtk::Image* DLWindow::createImage(const Glib::RefPtr<Gdk::Pixbuf> &pixBufDog)
+Gtk::Image* DLWindow::createImage(const Glib::RefPtr<Gdk::Pixbuf> &pixBuf)
 {
-	Gtk::Image *result = new Gtk::Image(pixBufDog);
+	Gtk::Image *result = new Gtk::Image(pixBuf);
 	result->set_hexpand(true);
 	result->set_vexpand(true);
 	result->override_background_color(Gdk::RGBA("white"));
@@ -108,6 +138,7 @@ Gtk::Image* DLWindow::createImage(const Glib::RefPtr<Gdk::Pixbuf> &pixBufDog)
 	result->set_margin_top(1);
 	result->set_margin_left(1);
 	result->set_margin_right(1);
+	result->show();
 	return result;
 }
 

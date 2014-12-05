@@ -8,6 +8,7 @@
 #ifndef SRC_DLWINDOW_H_
 #define SRC_DLWINDOW_H_
 
+#include <gtkmm.h>
 #include <gtkmm/window.h>
 #include <gtkmm/image.h>
 #include <gtkmm/grid.h>
@@ -37,7 +38,8 @@ private:
 	void flushGrid();
 	void update(char *data);
 	Gtk::Image* createImage(const Glib::RefPtr<Gdk::Pixbuf> &pixBufDog);
-
+	bool on_timeout(int timer_number);
+	int nbRun;
 };
 
 #endif /* SRC_DLWINDOW_H_ */
