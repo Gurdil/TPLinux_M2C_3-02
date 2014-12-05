@@ -7,32 +7,43 @@
 
 #include "DLWindow.h"
 
-DLWindow::DLWindow(int size) :
+
+//tab{'_','D','_','F','_','_','_','_','_','_',
+//		'_','_','_','F','_','_','_','_','_','_',
+//		'_','_','_','_','_','_','_','_','_','_',
+//		'_','_','_','_','_','_','_','_','_','_',
+//		'_','_','F','_','_','_','_','_','_','_',
+//		'_','_','_','_','_','_','_','_','_','_',
+//		'_','_','_','_','_','_','_','_','_','_',
+//		'_','_','_','_','_','_','_','_','_','_',
+//		'_','_','_','_','_','_','_','_','_','_',
+//		'_','_','_','_','_','_','_','_','_','_'},
+
+DLWindow::DLWindow(int size, DLControler *controler) :
 	DLMatrixHelper(size),
+	controler(controler),
 	pixBufDog(Gdk::Pixbuf::create_from_file("./res/dog.png", 50, 50,false)),
 	pixBufFlea(Gdk::Pixbuf::create_from_file("./res/flea.png", 50, 50,false)),
 	pixBufVoid(Gdk::Pixbuf::create_from_file("./res/void.png", 50, 50,false)),
 	grid(),
 	size(size),
-	nbFlea(10),
-	tab{'_','D','_','F','_','_','_','_','_','_',
-		'_','_','_','F','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','F','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_',
-		'_','_','_','_','_','_','_','_','_','_'},
-		nbRun(0)
+	nbFlea(controler->getNbrFlea()),
+	box(Gtk::ORIENTATION_VERTICAL),
+	nbRun(0),
+	buttonStart("Start")
 {
+	tab = new char[size*size];
+	for (int i = 0; i < size*size; ++i)
+	{
+		tab[i] = '_';
+	}
 
-	sigc::slot<bool> my_slot = sigc::bind(sigc::mem_fun(*this, &DLWindow::on_timeout), 1);
-	sigc::connection conn = Glib::signal_timeout().connect(my_slot, 1000);
+	buttonStart.signal_clicked().connect(sigc::mem_fun(*this, &DLWindow::startButtonClicked));
 
 	set_border_width(10);
-	add(grid);
+	add(box);
+	box.pack_start(grid);
+	box.pack_start(buttonStart);
 	grid.override_background_color(Gdk::RGBA("black"));
 
 	for (int i = 0; i < size*size; ++i)
@@ -61,29 +72,20 @@ DLWindow::DLWindow(int size) :
 	this->show_all_children(true);
 }
 
-bool DLWindow::on_timeout(int timer_number)
+void DLWindow::startButtonClicked()
 {
-	if(nbRun%2 == 0)
-	{
-		tab[55] = 'F';
-	}
-	else
-	{
-		tab[55] = '_';
-	}
+	sigc::connection conn = Glib::signal_timeout().connect(sigc::mem_fun(*this, &DLWindow::on_timeout), 1000);
+	buttonStart.set_state(Gtk::StateType::STATE_INSENSITIVE);
+}
+
+bool DLWindow::on_timeout()
+{
+	controler->getData(tab);
 
 	this->flushGrid();
 	this->update(tab);
 
-	nbRun++;
-	if(nbRun == 4)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+	return true;
 }
 
 DLWindow::~DLWindow()
@@ -99,6 +101,9 @@ DLWindow::~DLWindow()
 	}
 
 	delete pictureDog;
+	delete[] tab;
+
+	//controler->join();
 }
 
 void DLWindow::update(char *data)

@@ -26,7 +26,7 @@ public:
 	void show();
 	void setPuce(DLpuce *puce);
 	bool jumpPuce(int jumpX, int jumpY, DLpuce *puce);
-
+	void writeData(char *data);
 
 private:
 	int size;

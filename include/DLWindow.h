@@ -14,16 +14,19 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
+#include <gtkmm/button.h>
 #include <vector>
 #include "DLMatrixHelper.h"
+#include "DLControler.h"
 
 class DLWindow: public Gtk::Window, public DLMatrixHelper
 {
 public:
-	DLWindow(int size);
+	DLWindow(int size, DLControler *controler);
 	virtual ~DLWindow();
 
 private:
+	DLControler *controler;
 	Glib::RefPtr<Gdk::Pixbuf> pixBufDog;
 	Glib::RefPtr<Gdk::Pixbuf> pixBufFlea;
 	Glib::RefPtr<Gdk::Pixbuf> pixBufVoid;
@@ -33,13 +36,17 @@ private:
 	int nbFlea;
 	std::vector<Gtk::Image*> listPixVoid;
 	std::vector<Gtk::Image*> listPixFlea;
-	char tab[10*10];
+	char *tab;
 
 	void flushGrid();
 	void update(char *data);
 	Gtk::Image* createImage(const Glib::RefPtr<Gdk::Pixbuf> &pixBufDog);
-	bool on_timeout(int timer_number);
+	bool on_timeout();
+	void startButtonClicked();
+	Gtk::Box box;
 	int nbRun;
+	Gtk::Button buttonStart;
+
 };
 
 #endif /* SRC_DLWINDOW_H_ */

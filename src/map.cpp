@@ -82,6 +82,31 @@ void DLmap::show()
 	}
 }
 
+void DLmap::writeData(char *data)
+{
+	for (int i = 0; i < size*size; ++i)
+	{
+		DLCase *box = &cases[i];
+		if(box->getPuce() != NULL)
+		{
+			data[i] = 'F';
+		}
+		else
+		{
+			int pound = (int)box->getPound();
+			if(pound==1)
+			{
+				data[i] = 'D';
+			}
+			else
+			{
+				data[i] = '_';
+			}
+		}
+
+	}
+}
+
 void DLmap::setPuce(DLpuce *puce)
 {
 	while(true)

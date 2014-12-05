@@ -20,10 +20,6 @@ int main(int argc, char *argv[])
 {
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
 
-	DLWindow window(10);
-
-	return app->run(window);
-
 
 	#ifdef FRANCAIS
 		cout << "Bonjour" << endl;
@@ -32,6 +28,12 @@ int main(int argc, char *argv[])
 	#endif
 
 	DLControler controler(10);
+
+	controler.start();
+
+	DLWindow window(10, &controler);
+
+	return app->run(window);
 
 	return 0;
 
