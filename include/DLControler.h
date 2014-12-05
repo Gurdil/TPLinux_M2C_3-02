@@ -23,6 +23,7 @@ public:
 	void setPuce(int jumpX, int jumpY, DLpuce *puce);
 	bool getData(char* data);
 	int getNbrFlea();
+	void join();
 
 private:
 	int size;
@@ -36,6 +37,8 @@ private:
 	char* data;
 	sem_t dataReaded;
 	sem_t dataWrited;
+	sem_t gameEnd;
+	sem_t stop;
 };
 
 #endif /* SRC_DLCONTROLER_H_ */

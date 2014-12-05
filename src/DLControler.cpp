@@ -15,9 +15,11 @@ DLControler::DLControler(int size) :
 	listSavePuce(),
 	listPuceDog()
 {
+	sem_init(&stop, 0, 0);
 	data = new char[size*size];
 	sem_init(&dataReaded, 0, 0);
 	sem_init(&semPuceDog, 0, 1);
+	sem_init(&gameEnd, 0, 0);
 
 	nbPuce = (double)(size*size)/100*10;
 
@@ -51,24 +53,42 @@ int DLControler::getNbrFlea()
 
 bool DLControler::getData(char* data)
 {
+
 	sem_wait(&dataWrited);
+
+	int end;
+	sem_getvalue(&gameEnd, &end);
+
+	if(end)
+	{
+		return true;
+	}
+
 	for (int i = 0; i < size*size; ++i)
 	{
 		data[i] = this->data[i];
 	}
 	sem_post(&dataReaded);
 
-	return true;
+	return false;
 }
 
 void DLControler::doWork()
 {
 	int nbTour = 1;
+	int stopValue;
 	while(true)
 	{
+		sem_getvalue(&stop, &stopValue);
+		if(stopValue != 0)
+		{
+			break;
+		}
 		if (listPuce.size() == 0)
 		{
 			std::cout << "Fin de partie !" << std::endl;
+			sem_post(&gameEnd);
+			sem_post(&dataWrited);
 			break;
 		}
 		if(DLpuce::getNbrPuceWaiting() == (int)listPuce.size())
@@ -80,6 +100,12 @@ void DLControler::doWork()
 //			system("clear");
 
 			sem_wait(&dataReaded);
+
+			sem_getvalue(&stop, &stopValue);
+			if(stopValue != 0)
+			{
+				break;
+			}
 
 			this->map.writeData(data);
 
@@ -123,6 +149,13 @@ DLControler::~DLControler()
 	sem_destroy(&semPuceDog);
 	sem_destroy(&dataReaded);
 	sem_destroy(&dataWrited);
+}
+
+void DLControler::join()
+{
+	sem_post(&stop);
+	sem_post(&this->dataReaded);
+	DLthread::join();
 }
 
 void DLControler::setPuce(int jumpX, int jumpY, DLpuce *puce)

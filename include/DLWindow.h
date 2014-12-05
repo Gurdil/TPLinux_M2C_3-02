@@ -30,7 +30,9 @@ private:
 	Glib::RefPtr<Gdk::Pixbuf> pixBufDog;
 	Glib::RefPtr<Gdk::Pixbuf> pixBufFlea;
 	Glib::RefPtr<Gdk::Pixbuf> pixBufVoid;
+	Glib::RefPtr<Gdk::Pixbuf> pixBufVictory;
 	Gtk::Image *pictureDog;
+	Gtk::Image *pictureVictory;
 	Gtk::Grid grid;
 	int size;
 	int nbFlea;
@@ -46,7 +48,6 @@ private:
 	Gtk::Box box;
 	int nbRun;
 	Gtk::Button buttonStart;
-
 };
 
 #endif /* SRC_DLWINDOW_H_ */

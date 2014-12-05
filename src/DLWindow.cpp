@@ -25,6 +25,7 @@ DLWindow::DLWindow(int size, DLControler *controler) :
 	pixBufDog(Gdk::Pixbuf::create_from_file("./res/dog.png", 50, 50,false)),
 	pixBufFlea(Gdk::Pixbuf::create_from_file("./res/flea.png", 50, 50,false)),
 	pixBufVoid(Gdk::Pixbuf::create_from_file("./res/void.png", 50, 50,false)),
+	pixBufVictory(Gdk::Pixbuf::create_from_file("./res/victory.png")),
 	grid(),
 	size(size),
 	nbFlea(controler->getNbrFlea()),
@@ -57,6 +58,8 @@ DLWindow::DLWindow(int size, DLControler *controler) :
 	}
 
 	pictureDog = this->createImage(pixBufDog);
+	pictureVictory = this->createImage(pixBufVictory);
+	pictureVictory->show();
 
 	for (int i = 0; i < size; ++i)
 	{
@@ -74,13 +77,21 @@ DLWindow::DLWindow(int size, DLControler *controler) :
 
 void DLWindow::startButtonClicked()
 {
-	sigc::connection conn = Glib::signal_timeout().connect(sigc::mem_fun(*this, &DLWindow::on_timeout), 1000);
+	sigc::connection conn = Glib::signal_timeout().connect(sigc::mem_fun(*this, &DLWindow::on_timeout), 100);
 	buttonStart.set_state(Gtk::StateType::STATE_INSENSITIVE);
 }
 
 bool DLWindow::on_timeout()
 {
-	controler->getData(tab);
+	bool end = controler->getData(tab);
+
+	if(end)
+	{
+		grid.hide();
+		buttonStart.hide();
+		box.pack_start(*pictureVictory);
+		return false;
+	}
 
 	this->flushGrid();
 	this->update(tab);
@@ -101,9 +112,10 @@ DLWindow::~DLWindow()
 	}
 
 	delete pictureDog;
+	delete pictureVictory;
 	delete[] tab;
 
-	//controler->join();
+	controler->join();
 }
 
 void DLWindow::update(char *data)
