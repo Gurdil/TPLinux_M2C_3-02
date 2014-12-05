@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
 
-	DLWindow window;
+	DLWindow window(10);
 
 	return app->run(window);
 

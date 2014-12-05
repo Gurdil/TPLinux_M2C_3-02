@@ -13,19 +13,31 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
+#include <vector>
+#include "DLMatrixHelper.h"
 
-class DLWindow: public Gtk::Window
+class DLWindow: public Gtk::Window, public DLMatrixHelper
 {
 public:
-	DLWindow();
+	DLWindow(int size);
 	virtual ~DLWindow();
 
 private:
 	Glib::RefPtr<Gdk::Pixbuf> pixBufDog;
 	Glib::RefPtr<Gdk::Pixbuf> pixBufFlea;
-	Gtk::Image pictureDog;
-	Gtk::Image pictureFlea;
+	Glib::RefPtr<Gdk::Pixbuf> pixBufVoid;
+	Gtk::Image *pictureDog;
 	Gtk::Grid grid;
+	int size;
+	int nbFlea;
+	std::vector<Gtk::Image*> listPixVoid;
+	std::vector<Gtk::Image*> listPixFlea;
+	char tab[10*10];
+
+	void flushGrid();
+	void update(char *data);
+	Gtk::Image* createImage(const Glib::RefPtr<Gdk::Pixbuf> &pixBufDog);
+
 };
 
 #endif /* SRC_DLWINDOW_H_ */
