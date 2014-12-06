@@ -21,16 +21,45 @@ class DLpuce;
 
 /**
  * @author PHILIPPE Jean-Baptiste
- *
+ *	<p>
+ * 		Represent the map
+ * 	<p>
  **/
 class DLmap
 {
 public:
+	/**
+	 * @fn DLmap(int size)
+	 * Constructor
+	 * @param size The size of the map the map is square
+	 */
 	DLmap(int size);
 	virtual ~DLmap();
+	/**
+	 * @fn void show()
+	 * @deprecated not used anymore
+	 */
 	void show();
+	/**
+	 * @fn void setPuce(DLpuce *puce)
+	 * The flea is inserted on the map randomly
+	 * @param puce the flea to insert
+	 */
 	void setPuce(DLpuce *puce);
+	/**
+	 * @fn bool jumpPuce(int jumpX, int jumpY, DLpuce *puce)
+	 * Move a flea
+	 * @param jumpX the movement of the flea on X
+	 * @param jumpY the movement of the flea on Y
+	 * @param puce theflea to move
+	 * @return true if the flea is on the dog
+	 */
 	bool jumpPuce(int jumpX, int jumpY, DLpuce *puce);
+	/**
+	 * @fn void writeData(char *data)
+	 * the state of the map will be copied in the parameter data
+	 * @param data the tab were the data will be written
+	 */
 	void writeData(char *data);
 
 private:

@@ -21,12 +21,41 @@
 class DLControler: public DLthread
 {
 public:
+	/**
+	 * @fn DLControler(int size)
+	 * Constructor
+	 * @param size size of the map
+	 */
 	DLControler(int size);
 	virtual ~DLControler();
+	/**
+	 * @fn void setPuce(int jumpX, int jumpY, DLpuce *puce)
+	 * Move a flea
+	 * @param jumpX the movement of the flea on X
+	 * @param jumpY the movement of the flea on Y
+	 * @param puce theflea to move
+	 */
 	void setPuce(int jumpX, int jumpY, DLpuce *puce);
+	/**
+	 * @fn bool getData(char* data)
+	 * wait until the data is available
+	 * @return true if the play is finished
+	 */
 	bool getData(char* data);
+	/**
+	 * @fn int getNbrFlea()
+	 * @return the number of flea created
+	 */
 	int getNbrFlea();
+	/**
+	 * @fn void join()
+	 * the thread will be terminated
+	 */
 	void join();
+	/**
+	 * @fn int getSize()
+	 * @return size of the map
+	 */
 	int getSize();
 
 private:

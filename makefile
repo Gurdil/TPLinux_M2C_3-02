@@ -1,7 +1,7 @@
 DEBUG=yes
 GRAPHIC=yes
-CC=g++
 SIZE=20
+CC=g++
 CFLAGS=-W -Wall -ansi -pedantic -O0 -std=c++11 -D SIZE=$(SIZE)
 LDFLAGS= -lpthread
 ifeq ($(DEBUG),yes)

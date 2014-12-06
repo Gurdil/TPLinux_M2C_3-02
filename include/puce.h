@@ -18,19 +18,39 @@ class DLControler;
 
 /**
  * @author PHILIPPE Jean-Baptiste
- *
+ *	<p>
+ * 		Represent a fleaS
+ * 	<p>
  **/
 class DLpuce: public DLthread
 {
 public:
+	/**
+	 * @fn DLpuce(DLControler *controler)
+	 * Constructor
+	 * @param controler The controller
+	 */
 	DLpuce(DLControler *controler);
 	virtual ~DLpuce();
-
-	int get_posX();
-	int get_posY();
+	/**
+	 * @fn void join()
+	 * the thread will be terminated
+	 */
 	void join();
+	/**
+	 * @fn void go()
+	 * The flea begin a new turn
+	 */
 	void go();
+	/**
+	 * @fn static int getNbrPuceWaiting()
+	 * @return the number of fleas who have finish their turn
+	 */
 	static int getNbrPuceWaiting();
+	/**
+	 * @fn static void resetPuceWaitCounter()
+	 * Reset the counter of fleas who have finish their turn
+	 */
 	static void resetPuceWaitCounter();
 
 private:

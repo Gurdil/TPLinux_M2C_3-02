@@ -24,6 +24,10 @@ using namespace std;
 class DLthread
 {
 public:
+	/**
+	 * @fn DLthread()
+	 * Constructor
+	 */
 	DLthread();
 	virtual ~DLthread();
 
