@@ -10,6 +10,10 @@
 #include <semaphore.h>
 #include "puce.h"
 
+/**
+ * @author PHILIPPE Jean-Baptiste
+ *
+ **/
 class DLCase
 {
 public:

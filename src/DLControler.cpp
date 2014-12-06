@@ -97,11 +97,6 @@ void DLControler::doWork()
 		}
 		if(DLpuce::getNbrPuceWaiting() == (int)listPuce.size())
 		{
-//			std::cout << "tour : " << nbTour << std::endl;
-//			std::cout << "Puce : " << listPuce.size() << std::endl;
-//			this->map.show();
-//			//usleep(100000);
-//			system("clear");
 
 			sem_wait(&dataReaded);
 

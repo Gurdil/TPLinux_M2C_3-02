@@ -15,13 +15,25 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * @author PHILIPPE Jean-Baptiste
+ *
+ **/
 class DLthread
 {
 public:
 	DLthread();
 	virtual ~DLthread();
 
+	/**
+	 * @fn void start()
+	 *
+	 */
 	void start();
+	/**
+	 * @fn void join()
+	 *
+	 */
 	void join();
 
 private:
@@ -36,6 +48,10 @@ private:
 
 protected:
 
+	/**
+	 * @fn virtual void doWork()
+	 *
+	 */
 	virtual void doWork();
 
 };

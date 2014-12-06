@@ -8,13 +8,16 @@
 #ifndef SRC_DLCONTROLER_H_
 #define SRC_DLCONTROLER_H_
 
-#include <stdlib.h>
 #include <semaphore.h>
 #include <vector>
 #include "map.h"
 #include "puce.h"
 #include "thread.h"
 
+/**
+ * @author PHILIPPE Jean-Baptiste
+ *
+ **/
 class DLControler: public DLthread
 {
 public:

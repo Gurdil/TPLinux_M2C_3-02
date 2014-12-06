@@ -5,15 +5,10 @@
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
 //============================================================================
-#include "puce.h"
+
 #include "DLControler.h"
 #include "DLWindow.h"
-#include <string.h>
-#include <unistd.h>
 #include <iostream>
-#include <vector>
-#include <chrono>
-#include <random>
 
 #ifdef GRAPHIC
 #include <gtkmm/application.h>
@@ -33,7 +28,7 @@ int main()
 
 	#endif
 
-	int size = 10;
+	int size = SIZE;
 
 	DLControler controler(size);
 
@@ -64,6 +59,7 @@ int main()
 		std::cout <<std::endl;
 		std::cout <<std::endl;
 		turn++;
+		system("clear");
 	}
 
 	std::cout << "Fin de partie !" << std::endl;

@@ -16,6 +16,10 @@
 
 class DLControler;
 
+/**
+ * @author PHILIPPE Jean-Baptiste
+ *
+ **/
 class DLpuce: public DLthread
 {
 public:

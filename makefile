@@ -1,7 +1,8 @@
 DEBUG=yes
 GRAPHIC=yes
 CC=g++
-CFLAGS=-W -Wall -ansi -pedantic -O0 -std=c++11
+SIZE=20
+CFLAGS=-W -Wall -ansi -pedantic -O0 -std=c++11 -D SIZE=$(SIZE)
 LDFLAGS= -lpthread
 ifeq ($(DEBUG),yes)
 	CFLAGS += -g
@@ -45,7 +46,19 @@ endif
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-$(BIN_DIR)/main.o: $(INC_DIR)/puce.h
+$(BIN_DIR)/main.o: $(INC_DIR)/DLControler.h $(INC_DIR)/DLWindow.h
+
+$(BIN_DIR)/thread.o: $(INC_DIR)/thread.h
+
+$(BIN_DIR)/DLControler.o: $(INC_DIR)/map.h $(INC_DIR)/puce.h $(INC_DIR)/thread.h $(INC_DIR)/DLControler.h
+
+$(BIN_DIR)/case.o: $(INC_DIR)/puce.h $(INC_DIR)/case.h
+
+$(BIN_DIR)/DLWindow.o: $(INC_DIR)/DLMatrixHelper.h $(INC_DIR)/DLControler.h $(INC_DIR)/DLWindow.h
+
+$(BIN_DIR)/map.o: $(INC_DIR)/case.h $(INC_DIR)/puce.h $(INC_DIR)/map.h
+
+$(BIN_DIR)/puce.o: $(INC_DIR)/thread.h $(INC_DIR)/DLControler.h $(INC_DIR)/puce.h
 
 $(BIN_DIR)/thread.o: $(INC_DIR)/thread.h
 

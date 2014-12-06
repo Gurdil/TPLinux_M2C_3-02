@@ -8,16 +8,21 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include "case.h"
+
 #include <chrono>
 #include <random>
 #include <stdexcept>
 #include <iostream>
 #include <complex>
 #include <string>
+#include "case.h"
 
 class DLpuce;
 
+/**
+ * @author PHILIPPE Jean-Baptiste
+ *
+ **/
 class DLmap
 {
 public:

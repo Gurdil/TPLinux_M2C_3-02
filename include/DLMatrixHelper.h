@@ -11,6 +11,10 @@
 #include <string>
 #include <stdexcept>
 
+/**
+ * @author PHILIPPE Jean-Baptiste
+ *
+ **/
 class DLMatrixHelper
 {
 public:

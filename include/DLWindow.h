@@ -12,7 +12,6 @@
 #include <gtkmm/window.h>
 #include <gtkmm/image.h>
 #include <gtkmm/grid.h>
-#include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>
 #include <vector>
@@ -20,6 +19,10 @@
 #include "DLControler.h"
 
 
+/**
+ * @author PHILIPPE Jean-Baptiste
+ *
+ **/
 class DLWindow: public Gtk::Window, public DLMatrixHelper
 {
 public:
