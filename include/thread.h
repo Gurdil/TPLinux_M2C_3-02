@@ -17,7 +17,9 @@ using namespace std;
 
 /**
  * @author PHILIPPE Jean-Baptiste
- *
+ * <p>
+ * 		A wraper to a pthread C thread
+ * <p>
  **/
 class DLthread
 {
@@ -27,12 +29,12 @@ public:
 
 	/**
 	 * @fn void start()
-	 *
+	 * this method create the thread
 	 */
 	void start();
 	/**
 	 * @fn void join()
-	 *
+	 *	this method join the thread
 	 */
 	void join();
 
@@ -50,7 +52,8 @@ protected:
 
 	/**
 	 * @fn virtual void doWork()
-	 *
+	 * the method to overload in a subclass
+	 * the main job of the thread is do in this method
 	 */
 	virtual void doWork();
 

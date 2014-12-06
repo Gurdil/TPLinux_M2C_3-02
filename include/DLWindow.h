@@ -20,12 +20,24 @@
 
 
 /**
- * @author PHILIPPE Jean-Baptiste
  *
+ *	@author PHILIPPE Jean-Baptiste
+ *
+ *	<p>
+ *		Overload of the Gtk::Window class represent the main windows
+ *	<p>
  **/
 class DLWindow: public Gtk::Window, public DLMatrixHelper
 {
 public:
+	/**
+	 * @fn DLWindow(DLControler *controler)
+	 *
+	 * Constructor
+	 *
+	 * @param controler a instance of the controller
+	 *
+	 */
 	DLWindow(DLControler *controler);
 	virtual ~DLWindow();
 
