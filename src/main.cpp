@@ -13,29 +13,31 @@
 #include <vector>
 #include <chrono>
 #include <random>
+
+#ifdef GRAPHIC
 #include <gtkmm/application.h>
+#endif
 using namespace std;
 
 int main(int argc, char *argv[])
 {
+	#ifdef GRAPHIC
+
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
 
-
-	#ifdef FRANCAIS
-		cout << "Bonjour" << endl;
-	#else
-		cout << "Hello" << endl;
 	#endif
 
 	DLControler controler(10);
 
 	controler.start();
 
+	#ifdef GRAPHIC
+
 	DLWindow window(10, &controler);
 
 	return app->run(window);
 
-	return 0;
+	#endif
 
 	const int nbPuce = 10;
 	std::vector<DLpuce*> listPuce;
