@@ -24,6 +24,7 @@ public:
 	bool getData(char* data);
 	int getNbrFlea();
 	void join();
+	int getSize();
 
 private:
 	int size;

@@ -8,6 +8,7 @@
 #include "puce.h"
 #include "DLControler.h"
 #include "DLWindow.h"
+#include <string.h>
 #include <unistd.h>
 #include <iostream>
 #include <vector>
@@ -19,75 +20,56 @@
 #endif
 using namespace std;
 
+#ifdef GRAPHIC
 int main(int argc, char *argv[])
 {
+#else
+int main()
+{
+#endif
 	#ifdef GRAPHIC
 
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
 
 	#endif
 
-	DLControler controler(10);
+	int size = 10;
+
+	DLControler controler(size);
 
 	controler.start();
 
 	#ifdef GRAPHIC
 
-	DLWindow window(10, &controler);
+	DLWindow window(&controler);
 
 	return app->run(window);
 
+	#else
+
+	char *data = new char[size*size];
+	int turn = 0;
+	while(!controler.getData(data))
+	{
+		std::cout << "Turn : " << turn << std::endl;
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				std::cout << data[i*size + j];
+			}
+			std::cout <<std::endl;
+		}
+
+		std::cout <<std::endl;
+		std::cout <<std::endl;
+		turn++;
+	}
+
+	std::cout << "Fin de partie !" << std::endl;
+
+	delete[] data;
+
 	#endif
 
-	const int nbPuce = 10;
-	std::vector<DLpuce*> listPuce;
-	for (int i = 0; i < nbPuce; ++i)
-	{
-		listPuce.push_back(new DLpuce(NULL));
-	}
-
-	for (int i = 0; i < nbPuce; ++i)
-	{
-		listPuce[i]->start();
-	}
-
-	for (int i = 0; i < nbPuce; ++i)
-	{
-		listPuce[i]->go();
-	}
-
-	int nbTour = 1;
-	while(true)
-	{
-		if (nbTour == 30)
-		{
-			break;
-		}
-		if(DLpuce::getNbrPuceWaiting() == nbPuce)
-		{
-			std::cout << "tour : " << nbTour << std::endl;
-
-			DLpuce::resetPuceWaitCounter();
-			for (int i = 0; i < nbPuce; ++i)
-			{
-				listPuce[i]->go();
-			}
-			nbTour++;
-		}
-		else
-		{
-			usleep(1000);
-		}
-	}
-
-
-	usleep(1000000);
-	for (unsigned int i = 0; i < listPuce.size(); ++i)
-	{
-		DLpuce *puce = listPuce[i];
-		puce->join();
-		delete puce;
-		puce = NULL;
-	}
-	return 0;
 }

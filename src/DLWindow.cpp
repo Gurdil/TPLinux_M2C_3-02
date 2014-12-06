@@ -19,15 +19,18 @@
 //		'_','_','_','_','_','_','_','_','_','_',
 //		'_','_','_','_','_','_','_','_','_','_'},
 
-DLWindow::DLWindow(int size, DLControler *controler) :
-	DLMatrixHelper(size),
+DLWindow::DLWindow(DLControler *controler) :
+	DLMatrixHelper(controler->getSize()),
 	controler(controler),
-	pixBufDog(Gdk::Pixbuf::create_from_file("./res/dog.png", 50, 50,false)),
-	pixBufFlea(Gdk::Pixbuf::create_from_file("./res/flea.png", 50, 50,false)),
-	pixBufVoid(Gdk::Pixbuf::create_from_file("./res/void.png", 50, 50,false)),
+	size(controler->getSize()),
+	picSize((Gdk::Screen::get_default()->get_width() < Gdk::Screen::get_default()->get_height() ? Gdk::Screen::get_default()->get_width() : Gdk::Screen::get_default()->get_height()
+			- ((Gdk::Screen::get_default()->get_width() < Gdk::Screen::get_default()->get_height() ? Gdk::Screen::get_default()->get_width() : Gdk::Screen::get_default()->get_height()*25)
+					/100))/size),
+	pixBufDog(Gdk::Pixbuf::create_from_file("./res/dog.png", picSize, picSize,false)),
+	pixBufFlea(Gdk::Pixbuf::create_from_file("./res/flea.png", picSize, picSize,false)),
+	pixBufVoid(Gdk::Pixbuf::create_from_file("./res/void.png", picSize, picSize,false)),
 	pixBufVictory(Gdk::Pixbuf::create_from_file("./res/victory.png")),
 	grid(),
-	size(size),
 	nbFlea(controler->getNbrFlea()),
 	box(Gtk::ORIENTATION_VERTICAL),
 	nbRun(0),
@@ -80,6 +83,7 @@ void DLWindow::startButtonClicked()
 	sigc::connection conn = Glib::signal_timeout().connect(sigc::mem_fun(*this, &DLWindow::on_timeout), 100);
 	buttonStart.set_state(Gtk::StateType::STATE_INSENSITIVE);
 }
+
 
 bool DLWindow::on_timeout()
 {

@@ -9,6 +9,9 @@ endif
 ifeq ($(GRAPHIC),yes)
 	CFLAGS += -D GRAPHIC `pkg-config gtkmm-3.0 --cflags`
 	LDFLAGS += `pkg-config gtkmm-3.0 --libs`
+else
+	CFLAGS += `pkg-config gtkmm-3.0 --cflags`
+	LDFLAGS += `pkg-config gtkmm-3.0 --libs`
 endif
 
 EXEC=DLlinux

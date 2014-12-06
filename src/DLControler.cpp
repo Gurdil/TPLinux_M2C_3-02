@@ -51,6 +51,11 @@ int DLControler::getNbrFlea()
 	return nbPuce;
 }
 
+int DLControler::getSize()
+{
+	return size;
+}
+
 bool DLControler::getData(char* data)
 {
 
@@ -86,7 +91,6 @@ void DLControler::doWork()
 		}
 		if (listPuce.size() == 0)
 		{
-			std::cout << "Fin de partie !" << std::endl;
 			sem_post(&gameEnd);
 			sem_post(&dataWrited);
 			break;
